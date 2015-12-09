@@ -8,10 +8,11 @@ import java.util.Properties;
 import java.util.logging.*;
 
 public class Configuration {
-	private static String carma_main_path = null;
-	private static String carma_cfg_path = null;
+	public static String carma_main_path = null;
+	public static String carma_cfg_path = null;
     private static Configuration _instance = null;
     public static final String API_KEY = "apikey";
+    public static final String RYMUSER = "rymuser";
     private static Logger logger = Logger.getLogger("CARma");
     private Properties props = null;
 
@@ -31,10 +32,11 @@ public class Configuration {
     		    props.load(stream);
     		    stream.close();
     		    System.out.println("Config loaded!");
-    		    logger.severe( "Dann mal los." );
+    		   
     		    logger.warning( "Dann mal los." );
     		}else{
-    			
+    			 logger.severe( "Config not found" );
+    			 System.exit(0); 
     		}
     	}
     	catch (Exception e) {

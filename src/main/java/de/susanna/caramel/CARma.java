@@ -5,13 +5,24 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-public class CARma {
+import de.susanna.caramel.card.CARd_Main;
 
+public class CARma {
+	
+	public CARma() {
+		super();
+		loadProject();
+		
+	
+	}
+
+	CARd_Main cm =null;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	
-		System.out.println(Configuration.getInstance().getProperty(
-				Configuration.API_KEY));
+		CARma carma = new CARma();
+
 		
 	}
 
@@ -26,6 +37,17 @@ public class CARma {
 		    Logger.getAnonymousLogger().severe("Could not load default logging.properties file");
 		    Logger.getAnonymousLogger().severe(e.getMessage());
 		}
+	}
+	
+	public void loadProject(){
+		cm = new CARd_Main();
+		
+		cm.readrym(Configuration.getInstance().getProperty(Configuration.RYMUSER),
+				Configuration.carma_main_path);
+		System.out.println(Configuration.getInstance().getProperty(
+				Configuration.API_KEY));
+		
+		System.out.println(cm.getCl().getRymBands());
 	}
 	
 }

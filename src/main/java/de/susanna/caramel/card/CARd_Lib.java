@@ -204,5 +204,9 @@ public class CARd_Lib {
 		}
 		return bChanged;
 	}
+	
+	public int getSize(){
+		return recordlist.size();
+	}
 
 }

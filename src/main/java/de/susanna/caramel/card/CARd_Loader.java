@@ -250,6 +250,9 @@ public class CARd_Loader {
 			writeXML();
 		}
 	}
+	public int getRymBands(){
+		return mylib.getSize();
+	}
 
 
 }

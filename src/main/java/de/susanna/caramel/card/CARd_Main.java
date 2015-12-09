@@ -19,6 +19,17 @@ import org.apache.log4j.Logger;
 public class CARd_Main {
 	public static Logger logger;
 	
+	CARd_Loader cl;
+	public CARd_Loader getCl() {
+		return cl;
+	}
+
+
+
+	public void setCl(CARd_Loader cl) {
+		this.cl = cl;
+	}
+
 	String rym_user;
 	int waittime;
 	String location;
@@ -57,7 +68,7 @@ public class CARd_Main {
 	
 	
 	public void readrym(String rymuser, String localdir) {
-		CARd_Loader cl = new CARd_Loader();
+		cl = new CARd_Loader();
 
 		cl.readXML(localdir);
 		//cl.getImgs();
