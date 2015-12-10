@@ -17,6 +17,7 @@ public class CARma {
 	}
 
 	CARd_Main cm =null;
+	BeetsHelper bh = null;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -48,6 +49,10 @@ public class CARma {
 				Configuration.API_KEY));
 		
 		System.out.println(cm.getCl().getRymBands());
+		
+		bh = new BeetsHelper();
+		bh.loadBeets();
+		System.out.println(bh.getAlbumCount()+"#"+bh.getArtistCount());
 	}
 	
 }

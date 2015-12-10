@@ -106,6 +106,8 @@ public class DatabaseHelper {
 
 	}
 
+
+	
 	public void processCollection() {
 		this.foreignArtists = new LinkedHashSet<BeetsArtist>();
 
