@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import de.susanna.caramel.card.CARd_Lib;
+import de.susanna.caramel.card.CARd_Loader;
 import de.susanna.caramel.card.CARd_Main;
 
 public class CARma {
@@ -15,7 +17,7 @@ public class CARma {
 		
 	
 	}
-
+	CARd_Lib cl = null;
 	CARd_Main cm =null;
 	BeetsHelper bh = null;
 	
@@ -41,18 +43,24 @@ public class CARma {
 	}
 	
 	public void loadProject(){
-		cm = new CARd_Main();
+		CARd_Main cm = new CARd_Main();
 		
 		cm.readrym(Configuration.getInstance().getProperty(Configuration.RYMUSER),
 				Configuration.carma_main_path);
-		System.out.println(Configuration.getInstance().getProperty(
-				Configuration.API_KEY));
 		
-		System.out.println(cm.getCl().getRymBands());
-		
+		cl= cm.getCl().getMylib();
+	
 		bh = new BeetsHelper();
 		bh.loadBeets();
-		System.out.println(bh.getAlbumCount()+"#"+bh.getArtistCount());
+		cl.getSimilar(bh);
+		
+		
+	}
+
+	public void dump() {
+		
+		cl.dump();
+		bh.dumpAlbum();
 	}
 	
 }

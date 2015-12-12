@@ -9,7 +9,14 @@ import de.susanna.caramel.DAO.AlbumsDAO;
 //@DatabaseTable(tableName = "albums") 
 @DatabaseTable(daoClass = AlbumsDAO.class) 
 public class Albums { 
+	private double simcore = 0.0;
+	public double getSimcore() {
+		return simcore;
+	}
 
+	public void setSimcore(double simcore) {
+		this.simcore = simcore;
+	}
 	public final static String DISCTOTAL = "disctotal";
 	public final static String ALBUMSTATUS = "albumstatus";
 	public final static String MONTH = "month";
@@ -108,5 +115,18 @@ public class Albums {
 		result.setArtistid(mb_albumartistid);
 		return result;
 	}
+
+	public String toString(){
+		return album;
+		
+	}
+	
+	public String getRecord(){
+		return albumartist+"-"+album;
+	}
+	public int getId(){
+		return id;
+	}	
+	
 	
 }

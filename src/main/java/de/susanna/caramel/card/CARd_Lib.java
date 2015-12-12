@@ -14,6 +14,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import de.susanna.caramel.BeetsHelper;
+import de.susanna.caramel.model.Albums;
+
 @XmlRootElement(namespace = "de.susanna.caramel.card")
 @XmlType(propOrder = { "name", "date", "recordlist" })
 public class CARd_Lib {
@@ -207,6 +210,26 @@ public class CARd_Lib {
 	
 	public int getSize(){
 		return recordlist.size();
+	}
+	
+	public void getSimilar(BeetsHelper bh) {
+		String record;
+		
+		for (int i = 0; i < recordlist.size(); i++) {
+			
+			record = recordlist.get(i).getBand()+"-" + recordlist.get(i).getName();
+			
+			
+			Albums album = bh.getSimilar(record);
+			
+			if (album.getSimcore()<0.98){
+				System.out.println((i + 1) + "|" + record);
+				System.out.println("->" +"|"+album.getSimcore()+"|"+album.getId()+"|"+ album.getRecord());				
+			}
+			
+
+			
+		}
 	}
 
 }

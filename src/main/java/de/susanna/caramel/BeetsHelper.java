@@ -1,8 +1,12 @@
 package de.susanna.caramel;
 
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
@@ -13,12 +17,12 @@ import de.susanna.caramel.model.BeetsArtist;
 
 public class BeetsHelper {
 	
-	private static final String DATABASE_NAME = "/home/susanna/beetlib/beet.lib";
+	private static final String DATABASE_NAME = "beet.lib";
 	private List<Albums> albumCollection;
 	private LinkedHashSet<BeetsArtist> artistCollection;
 	
 	public void loadBeets(){
-		String databaseUrl = "jdbc:sqlite:" + DATABASE_NAME;
+		String databaseUrl = "jdbc:sqlite:" + Configuration.carma_main_path+"/"+DATABASE_NAME;
 	
 		try {
 			ConnectionSource connectionSource = new JdbcConnectionSource(
@@ -43,6 +47,57 @@ public class BeetsHelper {
 
 	public int getArtistCount(){
 		return this.artistCollection.size();
+	}	
+	
+	public void showDiff(){
+		
+	}
+	
+	public void dump(){
+		
+        Iterator<BeetsArtist> itr = artistCollection.iterator();
+        while(itr.hasNext()){
+        	BeetsArtist ba =  itr.next();
+        	
+        	
+            System.out.println(ba.getName());
+            
+        }
+	
+	}
+
+	public void dumpAlbum(){
+		
+        Iterator<Albums> itr = albumCollection.iterator();
+        while(itr.hasNext()){
+        	Albums ba =  itr.next();
+        	
+        	
+            System.out.println(ba.getRecord());
+            
+        }
+	
+	}	
+	
+	public Albums getSimilar(String candidate){
+		Albums best=null;
+		double score;
+		double oldscore;
+		
+        Iterator<Albums> itr = albumCollection.iterator();
+        oldscore = 0;
+        while(itr.hasNext()){
+        	Albums ba =  itr.next();
+        	
+        	score = StringUtils.getJaroWinklerDistance(candidate, ba.getRecord());
+        	
+        	if (score>oldscore){
+        		best = ba;
+        		oldscore = score;
+        	}
+        }
+        best.setSimcore(oldscore);
+        return best;
 	}	
 	
 }

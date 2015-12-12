@@ -19,6 +19,13 @@ import org.jsoup.select.Elements;
 public class CARd_Loader {
 
 	CARd_Lib mylib;
+	public CARd_Lib getMylib() {
+		return mylib;
+	}
+
+	public void setMylib(CARd_Lib mylib) {
+		this.mylib = mylib;
+	}
 	private static final String LIBRARY_XML = "rym.xml";
 
 	private static String userpath;
