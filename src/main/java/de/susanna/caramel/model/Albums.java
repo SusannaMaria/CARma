@@ -1,9 +1,18 @@
 package de.susanna.caramel.model;
+import java.io.File;
+import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
+
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import de.susanna.caramel.DAO.AlbumsDAO;
+import fm.last.musicbrainz.coverart.CoverArt;
+import fm.last.musicbrainz.coverart.CoverArtArchiveClient;
+import fm.last.musicbrainz.coverart.CoverArtImage;
+import fm.last.musicbrainz.coverart.impl.DefaultCoverArtArchiveClient;
 
 
 //@DatabaseTable(tableName = "albums") 
@@ -128,5 +137,26 @@ public class Albums {
 		return id;
 	}	
 	
-	
+	public String getImage(){
+		CoverArtArchiveClient client = new DefaultCoverArtArchiveClient();
+		UUID mbid = UUID.fromString(this.mb_albumid);
+
+		CoverArt coverArt = null;
+		try {
+		  coverArt = client.getByMbid(mbid);
+		  if (coverArt != null) {
+			  CoverArtImage frontimage = coverArt.getFrontImage();
+
+			  if (frontimage != null){
+				  File output = new File("/tmp/coverart/"+mbid.toString() + "_" + frontimage.getId() + ".jpg");
+			      FileUtils.copyInputStreamToFile(frontimage.getImage(), output);
+			      return "found!-"+albumartist+"-"+album;
+			  }
+
+		  }
+		} catch (Exception e) {
+		  // ...
+		}
+		return "not found!-"+albumartist+"-"+album;
+	}
 }

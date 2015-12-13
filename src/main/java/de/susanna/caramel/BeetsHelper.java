@@ -98,6 +98,19 @@ public class BeetsHelper {
         }
         best.setSimcore(oldscore);
         return best;
+	}
+
+	public void getCoverArt() {
+
+		int count=1;
+        Iterator<Albums> itr = albumCollection.iterator();
+        while(itr.hasNext()){
+        	Albums ba =  itr.next();
+        	
+        	System.out.println(count+"#"+ba.getImage());
+        	count++;
+        }	
+		
 	}	
 	
 }

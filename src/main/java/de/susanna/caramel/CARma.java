@@ -52,11 +52,14 @@ public class CARma {
 	
 		bh = new BeetsHelper();
 		bh.loadBeets();
-		cl.getSimilar(bh);
-		
-		
+		//cl.getSimilar(bh);
+
+		bh.getCoverArt();
 	}
 
+
+	
+	
 	public void dump() {
 		
 		cl.dump();

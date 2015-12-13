@@ -1,6 +1,6 @@
-8|Björk-Vulnicura
-9|Björk-Biophilia
-10|Björk-Medúlla
+a|Björk-Vulnicura
+-|Björk-Biophilia
+a|Björk-Medúlla
 59|The Worldonfire-... Live to Tell the Tale
 60|Einstürzende Neubauten-Haus der Lüge
 70|Michael Jackson-XSCAPE
