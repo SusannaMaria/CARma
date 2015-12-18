@@ -6,8 +6,8 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class CoverCleaner {
-	int withCover = 0;
-	int noCover = 0;
+	static int withCover = 0;
+	static int noCover = 0;
 
 	public void listDirectory(String dirPath) {
 
@@ -18,11 +18,12 @@ public class CoverCleaner {
 		if (firstLevelFiles != null && firstLevelFiles.length > 0) {
 
 			ArrayList<File> coverList = new ArrayList<File>();
-
+			boolean bAlbum=false;
+			
 			for (File aFile : firstLevelFiles) {
 
 				if (aFile.isDirectory()) {
-					System.out.println("[" + aFile.getName() + "]");
+					//System.out.println("[" + aFile.getName() + "]");
 					listDirectory(aFile.getAbsolutePath());
 				} else {
 
@@ -30,44 +31,52 @@ public class CoverCleaner {
 
 						String type = getContentType(aFile);
 						if (type != null && type.contains("image")) {
-							System.out.println(aFile.getName() + "#"
-									+ getContentType(aFile));
+							//System.out.println(aFile.getName() + "#"
+							//		+ getContentType(aFile));
 
 							coverList.add(aFile);
 
+						}else if (type != null && type.contains("audio")){
+							//System.out.println(type);
+							bAlbum = true;
 						}
-					} catch (IOException e) {
+					
+						
+				}catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
-			if (coverList.isEmpty()) {
+			if (coverList.isEmpty()&& bAlbum) {
+				
 				noCover++;
-			} else if (coverList.size() == 1) {
+				System.out.println(dirPath);
+			} else if (coverList.size() == 1 && bAlbum) {
 				withCover++;
-				System.out.println(coverList.get(0).getParent()+"#"+coverList.get(0).getName());
+				//System.out.println(coverList.get(0).getParent()+"#"+coverList.get(0).getName());
 				
 				String fn = coverList.get(0).getName();
 				
 			
 				String[] fna = fn.split("\\.");
 			
-				if (!fn.equalsIgnoreCase("cover."+fna[fna.length-1])){
-					File newFile= new File(coverList.get(0).getParent(),"cover."+fna[fna.length-1]);
+				if (!fn.equalsIgnoreCase("cover.1."+fna[fna.length-1])){
+					File newFile= new File(coverList.get(0).getParent(),"cover.1."+fna[fna.length-1]);
 					System.out.println("Rename:"+newFile.getAbsolutePath());
 					coverList.get(0).renameTo(newFile);
 				}
 				
 				
 				
-			} else {
+			} else if (bAlbum) {
+				withCover++;
 				int bigIndex = -1;
 				long bigSize = 0;
 				if (coverList.size() > 1) {
 					for (int i = 0; i < coverList.size(); i++) {
 						try {
-							if (bigSize < Files.size(coverList.get(i).toPath())) {
+							if (bigSize <= Files.size(coverList.get(i).toPath())) {
 								bigIndex = i;
 								bigSize = Files.size(coverList.get(i).toPath());
 							}
@@ -82,7 +91,7 @@ public class CoverCleaner {
 						for (int i = 0; i < coverList.size(); i++) {
 							if (i!=bigIndex){
 								System.out.println("delete: "+coverList.get(i).getAbsolutePath());
-								//coverList.get(i).delete();
+								coverList.get(i).delete();
 							}
 						}						
 					}
@@ -102,6 +111,7 @@ public class CoverCleaner {
 		CoverCleaner test = new CoverCleaner();
 		String dirToList = "/opt/Music/complete";
 		test.listDirectory(dirToList);
+		System.out.println(test.noCover+"#"+test.withCover);
 	}
 
 }
